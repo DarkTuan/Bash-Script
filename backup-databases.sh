@@ -1,16 +1,13 @@
 #!/bin/bash
- 
-###################################################
+ ###################################################
 ##   Script backup datebases 
 ##   Tùy chỉnh: DarkTuan
 ##   URL: https://cuuvanlongsutien.xyz
 ##   Cập nhật: 3/1/2020 cập nhật cơ sở dữ liệu + thông báo gửi mail khi backup xong
 ##   
 ###################################################
- 
 export PATH=/bin:/usr/bin:/usr/local/bin:/usr/sbin:
 TODAY=`date +"%d%b%Y"`
-################################################################
 ################## Cập nhật biến giá trị ########################
  
 DB_BACKUP_PATH='/var/backups/databases'
@@ -39,7 +36,7 @@ else
     echo "Subject: ${TODAY} - BACKUP ERROR" | ssmtp bdt.tuan@gmail.com
   exit 1
 fi
-##### Xoa ban sao luu sau {BACKUP_RETAIN_DAYS} ngay #####
+################## Xoa ban sao luu sau {BACKUP_RETAIN_DAYS} ngay ################
 
 DBDELDATE=`date +"%d%b%Y" --date="${BACKUP_RETAIN_DAYS} days ago"`
 
@@ -49,3 +46,4 @@ if [ ! -z ${DB_BACKUP_PATH} ]; then
             rm -rf ${DBDELDATE}
       fi
 fi
+################## Backup source code website ################
