@@ -10,13 +10,15 @@ export PATH=/bin:/usr/bin:/usr/local/bin:/usr/sbin:
 TODAY=`date +"%d%b%Y"`
 ################## Cập nhật biến giá trị ########################
  
+WEB_BACKUP='/var/backups/codeweb'
+CODE_WEB='/var/www/html/wordpress'
 DB_BACKUP_PATH='/var/backups/databases'
 MYSQL_HOST='localhost'
 MYSQL_PORT='3306'
 MYSQL_USER='darktuan'
 MYSQL_PASSWORD='@Dangtuan12'
 DATABASE_NAME='wordpress'
-BACKUP_RETAIN_DAYS=5   ## Số ngày lưu tại server
+BACKUP_RETAIN_DAYS=3   ## Số ngày lưu tại server
  
 #################################################################
 echo "Tien hanh backup database - ${DATABASE_NAME}"
@@ -46,4 +48,14 @@ if [ ! -z ${DB_BACKUP_PATH} ]; then
             rm -rf ${DBDELDATE}
       fi
 fi
-################## Backup source code website ################
+################## Backup source code website va xoa ################
+zip -rq ${WEB_BACKUP}/cuuvanlong_bk_${TODAY}.zip ${CODE_WEB}
+
+WEBDELDATE=`date +"%d%b%Y" --date="${BACKUP_RETAIN_DAYS} days ago"`
+
+if [ ! -z ${WEB_BACKUP} ]; then
+      cd ${WEB_BACKUP}
+      if [ ! -z ${WEBDELDATE} ] && [ -d ${WEBDELDATE} ]; then
+            rm -rf ${WEBDELDATE}
+      fi
+fi
