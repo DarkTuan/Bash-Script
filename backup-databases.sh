@@ -49,4 +49,3 @@ if [ ! -z ${DB_BACKUP_PATH} ]; then
             rm -rf ${DBDELDATE}
       fi
 fi
-##### 
