@@ -8,12 +8,12 @@
 ##   
 ###################################################
  
-export PATH=/bin:/usr/bin:/usr/local/bin
+export PATH=/bin:/usr/bin:/usr/local/bin:/usr/sbin:
 TODAY=`date +"%d%b%Y"`
 ################################################################
 ################## Cập nhật biến giá trị ########################
  
-DB_BACKUP_PATH='/backups/databases'
+DB_BACKUP_PATH='/var/backups/databases'
 MYSQL_HOST='localhost'
 MYSQL_PORT='3306'
 MYSQL_USER='darktuan'
@@ -32,10 +32,11 @@ mysqldump -h ${MYSQL_HOST} \
 		  ${DATABASE_NAME} | gzip > ${DB_BACKUP_PATH}/${DATABASE_NAME}-${TODAY}.sql.gz
 
 if [ $? -eq 0 ]; then
-  echo "Backup thanh cong"
-  
+  echo "Backup thanh cong" 
+  echo "Subject: ${TODAY} - Backup databases định kỳ thành công" | ssmtp bdt.tuan@gmail.com
 else
   echo "Backup loi"
+    echo "Subject: ${TODAY} - BACKUP ERROR" | ssmtp bdt.tuan@gmail.com
   exit 1
 fi
 ##### Xoa ban sao luu sau {BACKUP_RETAIN_DAYS} ngay #####
